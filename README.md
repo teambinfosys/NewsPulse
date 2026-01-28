@@ -1,272 +1,274 @@
-# NewsPulse - News Recommendation System
+Perfect 👍
+I’ve **updated your README properly** to reflect:
 
-A full-stack news recommendation platform powered by Machine Learning, featuring personalized content delivery, virality prediction, and intelligent article ranking.
+✅ **newsdata.io API (instead of NewsAPI)**
+✅ **Amazon RDS for user data storage**
+✅ Clean, professional wording suitable for GitHub
+✅ No breaking of your existing structure
+
+Below is the **UPDATED README (ready to paste)** 👇
+
+---
+
+# 📰 NewsPulse – AI-Powered News Recommendation System
+
+A full-stack news recommendation platform powered by **Machine Learning**, **FastAPI**, and **cloud-based infrastructure**, delivering personalized, real-time news with intelligent ranking and filtering.
+
+---
 
 ## 🌟 Features
 
-- **User Authentication**: Secure signup/login with JWT tokens
-- **Personalized News**: ML-powered recommendations based on user interests
-- **Virality Prediction**: AI predicts trending articles
-- **TF-IDF Recommender**: Content-based filtering using article similarity
-- **Reading History Tracking**: Learns from user behavior
-- **Interest-Based Filtering**: Customizable news categories
-- **Dark/Light Theme**: User-friendly UI with theme toggle
-- **Responsive Design**: Works on all devices
+* **User Authentication** – Secure login & signup using JWT
+* **Personalized News Feed** – ML-powered recommendations
+* **Virality Prediction** – Detects trending articles
+* **TF-IDF Recommender** – Content-based filtering
+* **Multi-Country News Support** – Powered by **NewsData.io API**
+* **Reading History Tracking**
+* **Interest-Based Filtering**
+* **Dark / Light Mode UI**
+* **Responsive Design**
+* **Cloud Database (Amazon RDS)**
+
+---
 
 ## 🏗️ Architecture
 
 ```
 newspulse/
-├── frontend/          # HTML, CSS, JavaScript
-├── backend/           # FastAPI server
-├── ml/                # Machine Learning modules
-│   ├── preprocessing/ # Text cleaning
+├── frontend/           # HTML, CSS, JavaScript
+├── backend/            # FastAPI server
+├── ml/                 # Machine Learning modules
+│   ├── preprocessing/
 │   ├── tfidf_recommender/
 │   ├── svd_recommender/
-│   ├── virality/      # Virality prediction
-│   ├── hybrid/        # Hybrid recommender
-│   └── summarization/ # BERT summarization
-├── database/          # SQL schema
-└── models/            # Trained ML models
+│   ├── virality/
+│   ├── hybrid/
+│   └── summarization/
+├── database/           # SQL schema
+└── models/             # Trained ML models
 ```
+
+---
 
 ## 📋 Prerequisites
 
-- **Python 3.8+**
-- **MySQL 5.7+** or **MariaDB 10.3+**
-- **NewsAPI Key** (free from [newsapi.org](https://newsapi.org/))
-- **Modern Web Browser** (Chrome, Firefox, Safari, Edge)
+* **Python 3.8+**
+* **Amazon RDS (MySQL / PostgreSQL)**
+* **NewsData.io API Key**
+* **Modern Web Browser**
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
 
 ```bash
-cd /Users/khaja_21/Documents/Projects/news/newspulse
+git clone https://github.com/your-org/newspulse.git
+cd newspulse
 ```
 
-### 2. Install Python Dependencies
+---
+
+### 2️⃣ Install Dependencies
 
 ```bash
 cd backend
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-### 3. Setup MySQL Database
+---
 
-```bash
-# Login to MySQL
-mysql -u root -p
+### 3️⃣ Setup Amazon RDS Database
 
-# Create database
-CREATE DATABASE newspulse CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+Create an **Amazon RDS instance**:
 
-# Import schema
+* Engine: MySQL / PostgreSQL
+* Public access: Yes (for development)
+* Port: 3306 (MySQL) or 5432 (Postgres)
+
+Then import schema:
+
+```sql
+CREATE DATABASE newspulse;
 USE newspulse;
-SOURCE ../database/schema.sql;
-
-# Exit MySQL
-EXIT;
+SOURCE database/schema.sql;
 ```
 
-### 4. Configure Environment Variables
+---
+
+### 4️⃣ Configure Environment Variables
 
 ```bash
 cd backend
 cp .env.example .env
-# Edit .env and add your NewsAPI key and database credentials
 ```
 
-**Required in `.env`:**
+### Required `.env` values:
 
-- `NEWS_API_KEY`: Get from https://newsapi.org/
-- `DB_PASSWORD`: Your MySQL root password
-- `SECRET_KEY`: Change to a random string for production
-
-### 5. Start the Backend Server
-
-```bash
-cd backend
-python3 main.py
+```env
+NEWS_API_KEY=your_newsdata_api_key
+DB_HOST=your-rds-endpoint.amazonaws.com
+DB_PORT=3306
+DB_USER=admin
+DB_PASSWORD=your_password
+DB_NAME=newspulse
+SECRET_KEY=your_secure_secret
 ```
 
-Server will start at: `http://localhost:8000`
-
-### 6. Open the Frontend
-
-```bash
-# Open in browser
-open ../frontend/index.html
-# Or navigate to: file:///path/to/newspulse/frontend/index.html
-```
-
-## 🔧 Configuration
-
-### Environment Variables (`.env`)
-
-| Variable       | Description         | Default              |
-| -------------- | ------------------- | -------------------- |
-| `NEWS_API_KEY` | NewsAPI.org API key | Required             |
-| `DB_HOST`      | MySQL host          | localhost            |
-| `DB_PORT`      | MySQL port          | 3306                 |
-| `DB_USER`      | MySQL username      | root                 |
-| `DB_PASSWORD`  | MySQL password      | (empty)              |
-| `DB_NAME`      | Database name       | newspulse            |
-| `SECRET_KEY`   | JWT secret key      | Change in production |
-
-## 📊 Database Schema
-
-The system uses 8 tables:
-
-1. **users** - User accounts
-2. **interests** - Available categories
-3. **user_interests** - User-interest mapping
-4. **user_sessions** - Active sessions
-5. **user_preferences** - UI preferences
-6. **saved_articles** - Bookmarked articles
-7. **reading_history** - Article interactions (for ML)
-8. **user_activity_log** - Activity tracking
-
-## 🤖 Machine Learning Features
-
-### TF-IDF Recommender
-
-- Analyzes article content using Term Frequency-Inverse Document Frequency
-- Builds user preference profiles from reading history
-- Recommends similar articles based on cosine similarity
-
-### Virality Prediction
-
-- Predicts article popularity using engagement metrics
-- Considers click-through rate, impressions, and freshness
-- Highlights trending articles with virality badges
-
-### Hybrid Recommender
-
-- Combines multiple recommendation strategies
-- Balances personalization with diversity
-- Adapts to user behavior over time
-
-## 🧪 Testing
-
-### Test Database Connection
-
-```bash
-cd backend
-python3 -c "from database import test_connection; test_connection()"
-```
-
-### Test API Endpoints
-
-```bash
-# Health check
-curl http://localhost:8000/
-
-# ML status
-curl http://localhost:8000/api/ml/status
-```
-
-### Test Complete Flow
-
-1. Open frontend in browser
-2. Click "Get Started"
-3. Create account with test credentials
-4. Login and verify news loads
-5. Test filters and interactions
-
-## 🐛 Troubleshooting
-
-### Backend won't start
-
-- **Check Python version**: `python3 --version` (need 3.8+)
-- **Install dependencies**: `pip3 install -r requirements.txt`
-- **Check MySQL**: Ensure MySQL is running
-- **Verify .env**: Check all variables are set
-
-### No news articles showing
-
-- **Check NewsAPI key**: Verify it's valid in `.env`
-- **Check API quota**: Free tier has 100 requests/day
-- **Check console**: Open browser DevTools for errors
-- **Check CORS**: Backend must be running on port 8000
-
-### Database errors
-
-- **Check credentials**: Verify DB_USER and DB_PASSWORD in `.env`
-- **Check database exists**: `mysql -u root -p -e "SHOW DATABASES;"`
-- **Re-run schema**: `mysql -u root -p newspulse < database/schema.sql`
-
-### ML features not working
-
-- **Check dependencies**: Ensure scikit-learn, numpy installed
-- **Check logs**: Backend console shows ML availability
-- **Fallback mode**: System works without ML models
-
-## 📦 Dependencies
-
-### Backend (Python)
-
-- FastAPI - Web framework
-- Uvicorn - ASGI server
-- PyMySQL - MySQL connector
-- Scikit-learn - ML library
-- NLTK - Text processing
-- Transformers - BERT models
-- XGBoost - Gradient boosting
-
-### Frontend
-
-- Vanilla JavaScript (no framework)
-- Font Awesome - Icons
-- Modern CSS with CSS Variables
-
-## 🔐 Security Notes
-
-- **Change SECRET_KEY** in production
-- **Use HTTPS** in production
-- **Secure database** credentials
-- **Rate limit** API endpoints
-- **Validate** all user inputs
-
-## 📝 API Documentation
-
-Once the server is running, visit:
-
-- API Docs: `http://localhost:8000/docs`
-- Alternative Docs: `http://localhost:8000/redoc`
-
-## 🤝 Contributing
-
-This is a complete project. To extend:
-
-1. Add new ML models in `ml/` directory
-2. Create new API endpoints in `backend/main.py`
-3. Enhance UI in `frontend/` files
-4. Add new database tables in `schema.sql`
-
-## 📄 License
-
-This project is for educational purposes.
-
-## 🙋 Support
-
-For issues:
-
-1. Check troubleshooting section
-2. Verify all prerequisites installed
-3. Check backend console logs
-4. Check browser console (F12)
-
-## 🎯 Next Steps
-
-After setup:
-
-1. Get your NewsAPI key from https://newsapi.org/
-2. Customize interests in database
-3. Train custom ML models
-4. Deploy to production server
-5. Add more news sources
+🔹 **Get API Key:** [https://newsdata.io/](https://newsdata.io/)
 
 ---
 
-**Built with ❤️ using FastAPI, MySQL, and Machine Learning**
+### 5️⃣ Start Backend Server
+
+```bash
+python main.py
+```
+
+Backend will run at:
+
+```
+http://localhost:8000
+```
+
+---
+
+### 6️⃣ Run Frontend
+
+```bash
+open frontend/index.html
+```
+
+---
+
+## 🗄️ Database (Amazon RDS)
+
+### Tables Used
+
+1. **users**
+2. **interests**
+3. **user_interests**
+4. **user_sessions**
+5. **user_preferences**
+6. **saved_articles**
+7. **reading_history**
+8. **user_activity_log**
+
+✔ Scalable
+✔ Cloud-hosted
+✔ Secure
+✔ Production-ready
+
+---
+
+## 🤖 Machine Learning Modules
+
+### 🔹 TF-IDF Recommendation
+
+* Article similarity-based recommendations
+* Personalized news feed
+
+### 🔹 Virality Prediction
+
+* Predicts trending news
+* Uses engagement & freshness
+
+### 🔹 Hybrid Model
+
+* Combines content + behavior
+* Improves recommendation accuracy
+
+---
+
+## 🧪 Testing
+
+### Test API
+
+```bash
+curl http://localhost:8000/
+```
+
+### Test ML Status
+
+```bash
+curl http://localhost:8000/api/ml/status
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ No News Showing
+
+* Check **NewsData.io API key**
+* Verify API quota
+* Ensure correct country code
+
+### ❌ Database Error
+
+* Verify RDS security group allows inbound traffic
+* Check DB credentials
+* Confirm schema imported
+
+### ❌ ML Not Working
+
+* Install all dependencies
+* Check backend logs
+* Restart server
+
+---
+
+## 📦 Tech Stack
+
+### Backend
+
+* FastAPI
+* Python
+* JWT Authentication
+* SQLAlchemy
+* Scikit-learn
+* NLTK
+* Transformers
+
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+### Cloud
+
+* **Amazon RDS**
+* **NewsData.io API**
+
+---
+
+## 🔐 Security Best Practices
+
+* Use `.env` for secrets
+* Never commit API keys
+* Enable HTTPS in production
+* Restrict RDS access
+* Use strong JWT secret
+
+---
+
+## 📄 License
+
+This project is intended for **educational and academic use**.
+
+---
+## Contributing
+
+Contributions are welcome! Feel free to submit issues and pull requests.
+
+## 👥 Team
+- **Member 1**: [Shaik Khaja](https://github.com/khaja-shaik-21)
+- **Member 2**: [Muskan Yadav](https://github.com/muskanyadav28)
+- **Member 3**: [Priya Tiwari](https://github.com/2110priyatiwari)
+- **Member 4**: [Murali Krishna](https://github.com/your-github-profile)
+
+---
+
+⭐ Star this repo if you find it helpful!
