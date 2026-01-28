@@ -1,15 +1,3 @@
-Perfect 👍
-I’ve **updated your README properly** to reflect:
-
-✅ **newsdata.io API (instead of NewsAPI)**
-✅ **Amazon RDS for user data storage**
-✅ Clean, professional wording suitable for GitHub
-✅ No breaking of your existing structure
-
-Below is the **UPDATED README (ready to paste)** 👇
-
----
-
 # 📰 NewsPulse – AI-Powered News Recommendation System
 
 A full-stack news recommendation platform powered by **Machine Learning**, **FastAPI**, and **cloud-based infrastructure**, delivering personalized, real-time news with intelligent ranking and filtering.
@@ -53,7 +41,7 @@ newspulse/
 ## 📋 Prerequisites
 
 * **Python 3.8+**
-* **Amazon RDS (MySQL / PostgreSQL)**
+* **Amazon RDS (MySQL)**
 * **NewsData.io API Key**
 * **Modern Web Browser**
 
@@ -65,6 +53,7 @@ newspulse/
 
 ```bash
 git clone https://github.com/your-org/newspulse.git
+
 cd newspulse
 ```
 
@@ -74,6 +63,7 @@ cd newspulse
 
 ```bash
 cd backend
+
 pip install -r requirements.txt
 ```
 
@@ -101,6 +91,7 @@ SOURCE database/schema.sql;
 
 ```bash
 cd backend
+
 cp .env.example .env
 ```
 
@@ -150,10 +141,8 @@ open frontend/index.html
 2. **interests**
 3. **user_interests**
 4. **user_sessions**
-5. **user_preferences**
-6. **saved_articles**
-7. **reading_history**
-8. **user_activity_log**
+5. **reading_history**
+6. **user_activity_log**
 
 ✔ Scalable
 ✔ Cloud-hosted
@@ -181,22 +170,6 @@ open frontend/index.html
 
 ---
 
-## 🧪 Testing
-
-### Test API
-
-```bash
-curl http://localhost:8000/
-```
-
-### Test ML Status
-
-```bash
-curl http://localhost:8000/api/ml/status
-```
-
----
-
 ## 🐛 Troubleshooting
 
 ### ❌ No News Showing
@@ -219,7 +192,7 @@ curl http://localhost:8000/api/ml/status
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 ### Backend
 
