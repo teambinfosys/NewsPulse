@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsPulse - AI-Powered News Platform</title>
+    <meta name="description" content="Personalized news recommendations powered by machine learning">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-newspaper"></i>
+                    <span>NewsPulse</span>
+                </div>
+                
+                <!-- Before Login Navigation -->
+                <div id="navBeforeLogin" class="nav-buttons">
+                    <button class="theme-toggle" id="themeToggleBeforeLogin" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                
+                <!-- After Login Navigation -->
+                <div id="navAfterLogin" class="nav-user hidden">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="user-menu">
+                        <button class="user-button" id="userButton" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="userName">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu hidden" id="dropdownMenu" role="menu">
+                            <div class="dropdown-divider"></div>
+                            <button onclick="logout()" role="menuitem">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div id="mainContent" class="hidden">
+        <div class="container">
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <div class="filters-grid">
+                    <!-- Quick Filter Buttons -->
+                    <button id="trendingBtn" class="filter-btn active" onclick="filterTrending()" title="Show trending news from all categories">
+                        <i class="fas fa-fire"></i> Trending
+                    </button>
+                    <button id="interestBtn" class="filter-btn" onclick="filterByInterest()" title="Show news based on interests you selected during signup">
+                        <i class="fas fa-heart"></i> My Interests
+                    </button>
+                    <button id="countryBtn" class="filter-btn" onclick="filterByUserCountry()" title="Show news from the country you selected during signup">
+                        <i class=\"fas fa-map-marker-alt\"></i> <span id=\"userCountryDisplay\">My Country</span>
+                    </button>
+                    
+                    <!-- Country Filter Dropdown -->
+                    <select id="countryFilter" class="filter-select" aria-label="Select country">
+                        <option value="">🌍 Loading countries...</option>
+                    </select>
+
+                    <!-- Category Filter Dropdown -->
+                    <select id="categoryFilter" class="filter-select" aria-label="Select category">
+                        <option value="">All Categories</option>
+                        <option value="technology">💻 Technology</option>
+                        <option value="business">💼 Business</option>
+                        <option value="sports">⚽ Sports</option>
+                        <option value="health">❤️ Health</option>
+                        <option value="entertainment">🎬 Entertainment</option>
+                        <option value="science">🔬 Science</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header">
+                <div class="trending-badge">
+                    <i class="fas fa-fire"></i>
+                    <h2 id="sectionTitle">Trending News</h2>
+                </div>
+                <div class="ml-status" id="mlStatus">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Powered</span>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="loading-spinner hidden">
+                <div class="spinner"></div>
+                <p>Loading personalized news...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-message hidden">
+                <i class="fas fa-exclamation-circle"></i>
+                <div>
+                    <p id="errorText"></p>
+                    <button class="retry-btn" onclick="retryFetchNews()">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div id="newsGrid" class="news-grid"></div>
+
+            <!-- No Results -->
+            <div id="noResults" class="no-results hidden">
+                <i class="fas fa-newspaper"></i>
+                <h3>No articles found</h3>
+                <p>Try adjusting your filters or check back later for new content.</p>
+                <button class="btn-primary" onclick="clearAllFilters()">Reset Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Screen (Before Login) -->
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="bg-shapes">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="welcome-content">
+            <h1>Welcome to NewsPulse</h1>
+            <p class="welcome-subtitle">Your AI-powered personalized news recommendation platform</p>
+            <div class="feature-highlights">
+                <div class="feature">
+                    <i class="fas fa-brain"></i>
+                    <span>ML-Powered Recommendations</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-globe"></i>
+                    <span>Global News Coverage</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Trending Topics</span>
+                </div>
+            </div>
+            <div class="welcome-buttons">
+                <button class="btn-large btn-primary" onclick="showSignup()">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                <button class="btn-large btn-outline" onclick="showLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModals()" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-sign-in-alt"></i>
+                <h2>Welcome Back</h2>
+                <p class="modal-subtitle">Login to your account</p>
+            </div>
+            
+            <form onsubmit="handleLogin(event)" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                
+                <div id="loginError" class="form-error hidden"></div>
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            
+            <p class="form-footer">
+                Don't have an account? <a href="#" onclick="showSignup(); return false;">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="hideModals()" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Step 1: Basic Details -->
+            <div id="signupStep1">
+                <div class="modal-header">
+                    <i class="fas fa-user-plus"></i>
+                    <h2>Create Account</h2>
+                    <p class="modal-subtitle">Step 1 of 2: Basic Details</p>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%"></div>
+                </div>
+                
+                <form onsubmit="goToStep2(event)" id="signupForm1">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="signupName" placeholder="Enter your full name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="signupPassword" placeholder="Create a password (min 6 characters)" required minlength="6">
+                        </div>
+                        <small class="form-hint">Password must be at least 6 characters long</small>
+                    </div>
+                    
+                    <div id="signupError1" class="form-error hidden"></div>
+                    
+                    <button type="submit" class="btn-primary btn-full">
+                        Next Step <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+                
+                <p class="form-footer">
+                    Already have an account? <a href="#" onclick="showLogin(); return false;">Login</a>
+                </p>
+            </div>
+            
+            <!-- Step 2: Location & Interests -->
+            <div id="signupStep2" class="hidden">
+                <div class="modal-header">
+                    <i class="fas fa-heart"></i>
+                    <h2>Personalize Your Feed</h2>
+                    <p class="modal-subtitle">Step 2 of 2: Location & Interests</p>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%"></div>
+                </div>
+                
+                <form onsubmit="handleSignup(event)" id="signupForm2">
+                    <!-- Location Selection -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Your Location (Required)</h3>
+                        <div class="location-grid">
+                            <div class="form-group">
+                                <label for="signupCountry">Country</label>
+                                <select id="signupCountry" class="filter-select" aria-label="Select country" required>
+                                    <option value="">🌍 Select your country...</option>
+                                </select>
+                                <small id="countryError" class="form-error hidden"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interests Selection -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-heart"></i> Select Your Interests</h3>
+                        <p class="section-hint">Choose at least one category you're interested in</p>
+                        
+                        <div class="interests-grid">
+                            <label class="interest-card">
+                                <input type="checkbox" name="interest" value="technology">
+                                <div class="interest-content">
+                                    <i class="fas fa-microchip"></i>
+                                    <span>Technology</span>
+                                </div>
+                            </label>
+                            
+                            <label class="interest-card">
+                                <input type="checkbox" name="interest" value="business">
+                                <div class="interest-content">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Business</span>
+                                </div>
+                            </label>
+                            
+                            <label class="interest-card">
+                                <input type="checkbox" name="interest" value="sports">
+                                <div class="interest-content">
+                                    <i class="fas fa-football-ball"></i>
+                                    <span>Sports</span>
+                                </div>
+                            </label>
+                            
+                            <label class="interest-card">
+                                <input type="checkbox" name="interest" value="health">
+                                <div class="interest-content">
+                                    <i class="fas fa-heartbeat"></i>
+                                    <span>Health</span>
+                                </div>
+                            </label>
+                            
+                            <label class="interest-card">
+                                <input type="checkbox" name="interest" value="entertainment">
+                                <div class="interest-content">
+                                    <i class="fas fa-film"></i>
+                                    <span>Entertainment</span>
+                                </div>
+                            </label>
+                            
+                            <label class="interest-card">
+                                <input type="checkbox" name="interest" value="science">
+                                <div class="interest-content">
+                                    <i class="fas fa-flask"></i>
+                                    <span>Science</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="signupError2" class="form-error hidden"></div>
+                    
+                    <div class="button-group">
+                        <button type="button" class="btn-outline" onclick="goToStep1()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-check"></i> Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
