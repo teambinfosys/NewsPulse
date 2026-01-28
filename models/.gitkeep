@@ -1,0 +1,2 @@
+# This directory stores trained ML models
+# Models are loaded by the ML inference modules
